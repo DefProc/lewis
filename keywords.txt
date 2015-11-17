@@ -1,0 +1,22 @@
+######################
+# Datatypes (KEYWORD1)
+######################
+
+Lewis KEYWORD1
+
+######################
+# Funtions (KEYWORD2)
+######################
+
+begin KEYWORD2
+available KEYWORD2
+read KEYWORD2
+peak KEYWORD2
+flush KEYWORD2
+flushRX KEYWORD2
+flushTX KEYWORD2
+write KEYWORD2
+
+#######################
+# Constants (LITERAL1)
+#######################
