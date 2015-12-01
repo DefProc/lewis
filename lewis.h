@@ -27,20 +27,34 @@ typedef uint8_t rx_buffer_index_t;
 
 #define START_INDEX 32
 
+#define DOT 1
+#define DASH 3
+#define INTERLETTER_SPACE 2
+#define INTERWORD_SPACE 4
+
 class Lewis : public Stream
 {
   protected:
     volatile rx_buffer_index_t _rx_buffer_head;
     volatile rx_buffer_index_t _rx_buffer_tail;
+    volatile uint32_t _next_rx = 0;
     volatile tx_buffer_index_t _tx_buffer_head;
     volatile tx_buffer_index_t _tx_buffer_tail;
+    volatile uint8_t _tx_state = LOW;
+    volatile uint32_t _next_tx = 0;
 
     uint8_t _rx_pin;
     uint8_t _tx_pin;
     uint8_t _samePin = true;
-    uint8_t _baud;
+    uint8_t _pulse_duration;
+    uint8_t _use_interrupts = true;
 
     char parseMorse();
+    void dot();
+    void dash();
+    void interletterSpace();
+    void interwordSpace();
+
     uint8_t _morseIndex = START_INDEX;
     uint8_t _indexJump = START_INDEX/2;
     //                   |0                         start:↓                              63|
@@ -49,12 +63,12 @@ class Lewis : public Stream
     // Don't put any members after these buffers, since only the first
     // 32 bytes of this struct can be accessed quickly using the ldd
     // instruction.
-    unsigned long _rx_buffer[MORSE_RX_BUFFER_SIZE];
+    unsigned char _rx_buffer[MORSE_RX_BUFFER_SIZE];
     unsigned char _tx_buffer[MORSE_TX_BUFFER_SIZE];
 
   public:
     void begin(int rx_pin) { return begin(rx_pin, rx_pin); }
-    void begin(uint8_t rx_pin, uint8_t tx_pin, uint8_t words_per_minute = 20);
+    void begin(uint8_t rx_pin, uint8_t tx_pin, uint8_t words_per_minute = 20, uint8_t use_interrupts = false);
     int available(void);
     int read(void);
     int peek();
@@ -62,6 +76,7 @@ class Lewis : public Stream
     void flushTX();
     void flushRX();
     size_t write(uint8_t);
+    void timerISR();
 
     //Stream() {_timeout=2000;}
 };
