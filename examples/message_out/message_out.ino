@@ -3,7 +3,9 @@
 Lewis morse;
 
 void setup() {
-  morse.begin(2, 9);
+  // single recieve (RX) and transmit (TX) pin (simplex)
+  // Lewis will switch the pin to OUTPUT as required to send
+  morse.begin(9);
 }
 
 void loop() {

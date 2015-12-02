@@ -37,11 +37,13 @@ class Lewis : public Stream
   protected:
     volatile rx_buffer_index_t _rx_buffer_head;
     volatile rx_buffer_index_t _rx_buffer_tail;
-    volatile uint32_t _next_rx = 0;
+    volatile uint8_t _rx_state = LOW;
+    volatile uint32_t _last_rx = 0;
     volatile tx_buffer_index_t _tx_buffer_head;
     volatile tx_buffer_index_t _tx_buffer_tail;
     volatile uint8_t _tx_state = LOW;
     volatile uint32_t _next_tx = 0;
+    volatile bool _transmitting = false;
 
     uint8_t _rx_pin;
     uint8_t _tx_pin;
@@ -49,7 +51,7 @@ class Lewis : public Stream
     uint8_t _pulse_duration;
     uint8_t _use_interrupts = true;
 
-    char parseMorse();
+    char parseMorse(bool advance_position = false);
     void dot();
     void dash();
     void interletterSpace();
@@ -58,13 +60,13 @@ class Lewis : public Stream
     uint8_t _morseIndex = START_INDEX;
     uint8_t _indexJump = START_INDEX/2;
     //                   |0                         start:↓                              63|
-    char* _morseLookup = "~5h4s~v3I~f~u~~2e~l~r+~~a~p~w~j1~6b=d/x~n~c~k~y~t7z~g~q~m8~~o9~0";
+    char* _morseLookup = "~5h4s~v3i~f~u~~2e~l~r+~~a~p~w~j1~6b=d/x~n~c~k~y~t7z~g~q~m8~~o9~0";
 
     // Don't put any members after these buffers, since only the first
     // 32 bytes of this struct can be accessed quickly using the ldd
     // instruction.
-    unsigned char _rx_buffer[MORSE_RX_BUFFER_SIZE];
-    unsigned char _tx_buffer[MORSE_TX_BUFFER_SIZE];
+    uint8_t _rx_buffer[MORSE_RX_BUFFER_SIZE];
+    uint8_t _tx_buffer[MORSE_TX_BUFFER_SIZE];
 
   public:
     void begin(int rx_pin) { return begin(rx_pin, rx_pin); }
@@ -77,6 +79,7 @@ class Lewis : public Stream
     void flushRX();
     size_t write(uint8_t);
     void timerISR();
+    void checkIncoming();
 
     //Stream() {_timeout=2000;}
 };
