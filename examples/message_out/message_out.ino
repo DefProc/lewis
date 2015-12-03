@@ -11,4 +11,10 @@ void setup() {
 void loop() {
   Morse.print("ok");
   delay(1000);
+  Morse.write('s');
+  delay(1000);
+  Morse.print(1);
+  delay(1000);
+  Morse.print(1.10);
+  delay(1000);
 }

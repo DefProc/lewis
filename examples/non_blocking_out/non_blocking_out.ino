@@ -8,7 +8,7 @@ void setup() {
   // Morse.begin(rx_pin, tx_pin, words_per_minute, use_interrupts)
   Morse.begin(2, 9, 20, true);
   Timer1.initialize(10000);
-  Timer1.attachInterrupt(MorseISR);
+  Timer1.attachInterrupt(myISR);
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
@@ -22,7 +22,7 @@ void loop() {
   }
 }
 
-void MorseISR()
+void myISR()
 {
   Morse.timerISR();
 }
