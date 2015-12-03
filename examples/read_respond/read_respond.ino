@@ -1,22 +1,22 @@
-#include "lewis.h"
+#include "Lewis.h"
 
-Lewis morse;
+Lewis Morse;
 
 void setup() {
   // single recieve (RX) and transmit (TX) pin (simplex)
   // Lewis will switch the pin to OUTPUT as required to send
-  morse.begin(9);
+  Morse.begin(9);
 }
 
 void loop() {
   // call checkIncoming often enough to catch the incoming presses
-  morse.checkIncoming();
+  Morse.checkIncoming();
 
-  if (morse.available()) {
-    char c = morse.read();
+  if (Morse.available()) {
+    char c = Morse.read();
     if (c == 'k') {
       delay(100);
-      morse.print("ok");
+      Morse.print("ok");
     }
   }
 }

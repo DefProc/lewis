@@ -2,7 +2,7 @@
 #include <inttypes.h>
 #include "Arduino.h"
 
-#include "lewis.h"
+#include "Lewis.h"
 
 void Lewis::begin(uint8_t rx_pin, uint8_t tx_pin, uint8_t words_per_minute, uint8_t use_interrupts)
 {
