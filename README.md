@@ -1,7 +1,7 @@
 Lewis
 =====
 
-A morse code interpreter: making your morse easier to use and process — [Lewis *helps* Morse!](https://en.wikipedia.org/wiki/Inspector_Morse_(TV_series)).
+A morse code interpreter: making your [Morse](https://en.wikipedia.org/wiki/Inspector_Morse_(TV_series)) easier to use and process.
 
 Lewis is a Serial-type library for converting variable data to morse code output, or converting morse code input into strings and numbers. You can use Lewis to send and receive morse code from your Arduino, and even allow you to converse, send instructions, get status or transfer data using one pin (simplex) or two for full duplex communication.
 
