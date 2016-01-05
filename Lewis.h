@@ -25,7 +25,7 @@ typedef uint16_t rx_buffer_index_t;
 typedef uint8_t rx_buffer_index_t;
 #endif
 
-#define START_INDEX 32
+#define START_INDEX 64
 
 #define DOT 1
 #define DASH 3
@@ -59,8 +59,10 @@ class Lewis : public Stream
 
     uint8_t _morseIndex = START_INDEX;
     uint8_t _indexJump = START_INDEX/2;
-    //                   |0                         start:↓                              63|
-    char* _morseLookup = "~5h4s~v3i~f~u~~2e~l~r+~~a~p~w~j1~6b=d/x~n~c~k~y~t7z~g~q~m8~~o9~0";
+    //                   |0                            start:↓                             63|
+    // char* _morseLookup = "~5h4s~v3i~f~u~~2e~l~r+~~a~p~w~j1~6b=d/x~n~c~k~y~t7z~g~q~m8~~o9~0";
+    //                   |0                                                        start:↓                                                             127|
+    char* _morseLookup = "~5~h~4~s~~~v~3~I~đ~f~~~u?~_ü~2~e~&“l“è~r~+.ä~~~a~þ~p@à~w~ĵ~j'1~~~6-b~=~d~/~x~~~n~~~c;~!k~()y~~~t~7~z~~,g~~~q~~~m:8~ö~~~o~9~~~0~~";
 
     // Don't put any members after these buffers, since only the first
     // 32 bytes of this struct can be accessed quickly using the ldd
