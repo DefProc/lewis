@@ -121,9 +121,6 @@ size_t Lewis::write(uint8_t c)
       // translate spaces or newlines to an interword space
       interwordSpace();
       return 0;
-    } else if (c == '.') {
-      // use the six pulse .
-      dot(); dash(); dot(); dash(); dot(); dash(); interletterSpace();
     } else {
       // the selected character was not found in the lookup table
       return 1;
@@ -302,11 +299,11 @@ void Lewis::checkIncoming()
   // we only need to do something on change or a long duration low
   if (_rx_state == LOW) {
     // have we been low long enough for an inter-word/letter space?
-    if (_rx_buffer[_rx_buffer_head] == INTERLETTER_SPACE && current_time - _last_rx >= _pulse_duration * (DOT + INTERLETTER_SPACE + INTERWORD_SPACE)) {
+    if (_rx_buffer[_rx_buffer_head] == INTERLETTER_SPACE && current_time - _last_rx >= _pulse_duration * (DOT + INTERLETTER_SPACE + INTERWORD_SPACE) + 1) {
       // it's been an inter-word space (must follow an inter letter space)
       _rx_buffer_head = (_rx_buffer_head + 1) % MORSE_RX_BUFFER_SIZE;
       _rx_buffer[_rx_buffer_head] = INTERWORD_SPACE;
-    } else if ((_rx_buffer[_rx_buffer_head] == DOT || _rx_buffer[_rx_buffer_head] == DASH) && current_time - _last_rx >= _pulse_duration * (DOT + INTERLETTER_SPACE)) {
+    } else if ((_rx_buffer[_rx_buffer_head] == DOT || _rx_buffer[_rx_buffer_head] == DASH) && current_time - _last_rx >= _pulse_duration * (DOT + INTERLETTER_SPACE) + 1) {
       // it's been an inter-letter space (must follow a dot or dash)
       _rx_buffer_head = (_rx_buffer_head + 1) % MORSE_RX_BUFFER_SIZE;
       _rx_buffer[_rx_buffer_head] = INTERLETTER_SPACE;
