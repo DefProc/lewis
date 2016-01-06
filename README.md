@@ -50,9 +50,9 @@ Lewis uses the same function types as the [Serial library](https://www.arduino.c
 
 in the default initiation, the output code will be “blocking” — that is, it will stop at the print line while until it has finished sending the full code. This is fine for small implementations, but for more complex code, you'll want to keep running your main code, and have the morse code sent in the background.
 
-If you call `begin` with `use_interrupts` set as `true`, then you will need to call `Morse.timerISR()` frequently enough that it can check if any dots or dashes need sending out, without the listener hearing any inaccuracy in the tone length. 100Hz seems to work nicely.
+If you call `begin` with `use_interrupts` set as `true`, then you will need to call `Morse.timerISR()` frequently enough that it can check if any dots or dashes need sending out, without the listener hearing any inaccuracy in the tone length. 100Hz seems to work nicely for me.
 
-Lewis does not include attach a timer interrupt when initialised (so as not to clash with anything you're already doing), so you will need to include one. The examples use the [TimerOne](https://github.com/PaulStoffregen/TimerOne) library for the interrupt.
+Lewis does not attach a timer interrupt when initialised (so as not to clash with anything you're already doing), so you will need to include one in your sketch. The examples use the [TimerOne](https://github.com/PaulStoffregen/TimerOne) library for the interrupt.
 
 ```
 // from the non_blocking_out example:
@@ -82,7 +82,7 @@ Receiving morse
 
 Lewis needs to watch the receiving pin of your choice for it's LOW→HIGH changes often enough that it can see every change and accurately time the duration between each one to decode the dots, dashes, inter-letter spaces and inter-word spaces. To do so, your script will have do call the `checkIncoming` function rapidly enough (ideally 100 times or more per second) to pass decode the morse stream and pass them into the receiving buffer.
 
-If you're using the interrupt initialisation of Lewis, then `checkIncoming` is already included in the `timerISR` function, so Lewis will already be watching your rx pin for button presses. If you're using the standard, non-interrupting initialisation then just putting `Morse.checkIncoming()` in a fast loop will be enough.
+If you're using the interrupt initialisation of Lewis, then `checkIncoming` is already included in the `timerISR` function, so Lewis will already be watching your receive pin for button presses. If you're using the standard, non-interrupting initialisation then just putting `Morse.checkIncoming()` in a fast loop will be enough.
 
 ```
 //from the read_respond example
