@@ -108,6 +108,10 @@ char Lewis::parseMorse(bool advance_position)
 
 size_t Lewis::write(uint8_t c)
 {
+  if (c >= 'A' && c <= 'Z') {
+    // convert upercase letters to lowercase
+    c = c + 0x20;
+  }
   uint8_t targetLocation = 0;
   for (targetLocation=0; targetLocation<=START_INDEX*2; targetLocation++) {
     if (c == _morseLookup[targetLocation]) {

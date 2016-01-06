@@ -59,8 +59,8 @@ class Lewis : public Stream
 
     uint8_t _morseIndex = START_INDEX;
     uint8_t _indexJump = START_INDEX/2;
-    //                   |0                                                                            start:↓                                                                127|
-    char* _morseLookup = "~~5~h~4~s~~~v~3~i~\xF0~f~~~u?~_\xFC~2~e~&~l\"\xE8~r~+.\xE4~~~a~\xFE~p@\xE0~w~~~j\'1~~~6-b~=~d~/~x~~~n~~~c;~!k~()y~~~t~7~z~~,g~~~q~~~m:8~\xF6~~~o~9~~~0~";
+    //                   |0                                                           start:↓                                                            127|
+    char* _morseLookup = "~~5~h~4~s~~~v~3~i~~~f~~~u?~_~~2~e~&~l\"~~r~+.~~~~a~~~p@~~w~~~j\'1~~~6-b~=~d~/~x~~~n~~~c;~!k~()y~~~t~7~z~~,g~~~q~~~m:8~~~~~o~9~~~0~";
 
     // Don't put any members after these buffers, since only the first
     // 32 bytes of this struct can be accessed quickly using the ldd
