@@ -1,3 +1,6 @@
+# Ignore compiled files
+*.tar.gz
+
 # For PCBs designed using KiCAD: http://www.kicad-pcb.org/
 
 # Temporary files
