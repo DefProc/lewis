@@ -1,0 +1,23 @@
+{
+  "name": "Lewis",
+  "version": "0.1.4",
+  "description": "A Serial-style morse code interpreter: making your Morse easier to use and process.",
+  "keywords": "Communication, Serial, Morse, Code, dit, dah",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/DefProc/lewis.git"
+  },
+  "authors":
+  [
+    {
+      "name": "Patrick Fenner",
+      "email": "contact@defproc.co.uk",
+      "url": "https://defproc.co.uk/",
+      "maintainer": true
+    }
+  ],
+  "license": "MIT",
+  "frameworks": "*",
+  "platforms": "*"
+}

@@ -10,21 +10,21 @@ Lewis can be used either as a set of blocking functions (pulsing out will stop a
 Using Lewis
 -----------
 
-However you use Lewis, after installing the library (e.g. using the [library manager](https://www.arduino.cc/en/Guide/Libraries#toc2) to import it), you will have to included the library header file at the top of your sketch:
+However you use Lewis, after installing the library (e.g. using the [library manager](https://www.arduino.cc/en/Guide/Libraries#toc2) to import it), you will have to include the library header file at the top of your sketch:
 
-```
+```cpp
 #include "Lewis.h"
 ```
 
 And instantiate the Lewis class of functions with a name that you use later. I use `Morse` but you can choose whatever name you like, as long as you are consistent through the sketch:
 
-```
+```cpp
 Lewis Morse;
 ```
 
 Using Lewis requires calling the begin function in `setup()`, to choose the input and output pins, the pulse rate, and if you will be using the interrupt function:
 
-```
+```cpp
   Morse.begin(rx_pin, tx_pin, words_per_minute, use_interrupts);
   // e.g.
   Morse.begin(2, 9, 20, false);
@@ -42,7 +42,7 @@ Sending morse code
 
 Lewis uses the same function types as the [Serial library](https://www.arduino.cc/en/Reference/Serial) so data can be sent using the `print` and `write` commands:
 
-```
+```cpp
   // from the message_out example
   Morse.print("ok"); // will send: ---/-.-
   Morse.write('s'); // will send: ...
@@ -50,11 +50,11 @@ Lewis uses the same function types as the [Serial library](https://www.arduino.c
 
 in the default initiation, the output code will be “blocking” — that is, it will stop at the print line while until it has finished sending the full code. This is fine for small implementations, but for more complex code, you'll want to keep running your main code, and have the morse code sent in the background.
 
-If you call `begin` with `use_interrupts` set as `true`, then you will need to call `Morse.timerISR()` frequently enough that it can check if any dots or dashes need sending out, without the listener hearing any inaccuracy in the tone length. 100Hz seems to work nicely for me.
+If you call `begin` with `use_interrupts` set as `true`, then you will need to call `Morse.timerISR()` frequently enough that it can check if any dots or dashes need sending out, without the listener hearing any inaccuracy in the tone length. 100Hz seems to work nicely.
 
 Lewis does not attach a timer interrupt when initialised (so as not to clash with anything you're already doing), so you will need to include one in your sketch. The examples use the [TimerOne](https://github.com/PaulStoffregen/TimerOne) library for the interrupt.
 
-```
+```cpp
 // from the non_blocking_out example:
 
 // additionally include the TimerOne library
@@ -80,11 +80,11 @@ void myISR()
 Receiving morse
 ---------------
 
-Lewis needs to watch the receiving pin of your choice for it's LOW→HIGH changes often enough that it can see every change and accurately time the duration between each one to decode the dots, dashes, inter-letter spaces and inter-word spaces. To do so, your script will have do call the `checkIncoming` function rapidly enough (ideally 100 times or more per second) to pass decode the morse stream and pass them into the receiving buffer.
+Lewis needs to watch the receiving pin of your choice for it's `LOW → HIGH` changes often enough that it can see every change and accurately time the duration between each one to decode the dots, dashes, inter-letter spaces and inter-word spaces. To do so, your script will have do call the `checkIncoming` function rapidly enough (ideally 100 times or more per second) to pass decode the morse stream and pass them into the receiving buffer.
 
 If you're using the interrupt initialisation of Lewis, then `checkIncoming` is already included in the `timerISR` function, so Lewis will already be watching your receive pin for button presses. If you're using the standard, non-interrupting initialisation then just putting `Morse.checkIncoming()` in a fast loop will be enough.
 
-```
+```cpp
 //from the read_respond example
 void loop() {
   // call checkIncoming often enough to catch the incoming presses
@@ -104,7 +104,7 @@ With such a small loop, the checking function is not likely to miss any button p
 
 To process data that's in the receive buffer, you can check if there is data, and process that as you normally would with Serial input:
 
-```
+```cpp
 // first check if there's anything to process:
 if (Morse.available();) { // available returns the number of characters available
   // read grabs the next character from the buffer:
